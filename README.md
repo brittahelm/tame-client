@@ -1,68 +1,95 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# tame
 
-## Available Scripts
+<br>
 
-In the project directory, you can run:
+## Description
+An app that allows users to track their migraines, view personal migraine statistics and recommend remedies to other users.
 
-### `npm start`
+## User Stories
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+-  **Start** As a anon I can see what the site is about before I sign up 
+-  **Signup:** As an anon I can sign up in the platform so that I can start tracking my migraines
+-  **Login:** As a user I can login to the platform so that I can track my migraines
+-  **Logout:** As a user I can logout from the platform so no one else can modify my information
+- **Add new migraine info** As a user I can record a new migraine attack
+- **View stats** As a user I can see my personal migraine history and statistics
+- **Edit migraines** As a user I can edit details of my migraines
+- **Delete migraines** As a user I can delete migraines
+- **Recommend** As a user I can recommend remedies to other users and see what is recommended by them
+- **Explore** As a user I can read articles and watch videos about migraines
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Backlog
+- Night mode to alleviate eye strain
+- Phone notifications
+- Voice navigation
 
-### `npm test`
+# Client / Frontend
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## React Router Routes (React App)
+| Path                      | Component                      | Permissions | Behavior                                                     |
+| ------------------------- | --------------------           | ----------- | ------------------------------------------------------------ |
+| `/`                       | SplashPage                     | public `<Route>`            | Home page                                        |
+| `/signup`                 | SignupPage                     | anon only  `<AnonRoute>`    | Signup form, link to login, navigate to homepage after signup |
+| `/login`                  | LoginPage                      | anon only `<AnonRoute>`     | Login form, link to signup, navigate to homepage after login  |
+| `/logout`                 | n/a                            | user only `<PrivateRoute>`  | Navigate to homepage after logout, expire session             |
+| `record`                  | NavBar, ElementList, FooterBar | user only `<PrivateRoute>`  | Enter new migraine migraines                                |
+| `/migraines/stats`        | NavBar, ElementList, FooterBar | user only `<PrivateRoute>`  | Shows all stats migraines                                    |
+| `/migraines/history`      | NavBar, ElementList, FooterBar | user only `<PrivateRoute>`  | Shows list of all migraines explore                                    |
+| `/explore/media      `    | SearchForm, SearchResults      | user only  `<PrivateRoute>` | Look through articles, videos explore                               |
+| `/explore/remedies`       | SearchForm, SearchResults      | user only `<PrivateRoute>`  | Community recommendations and ratings 
 
-### `npm run build`
+## Components
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- LoginPage
+- SignupPage
+- NavBar
+- Record migraine form
+- Migraines list
+- Migraine details
+- Stats overview
+- Recommendations list
+- Media overview
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Services
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Auth Service
+  - auth.login(user)
+  - auth.signup(user)
+  - auth.logout()
 
-### `npm run eject`
+- Migraine Service
+  - migraine.create
+  - migraine.delete
+  - migraine.edit
+  - migraine.list
+  - migraine.detail
+  
+- External API
+  - API for articles
+  - API for videos
+  - API for messaging
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  <br>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  ## Links
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Trello/Kanban
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+[Link to your trello board]() 
+or picture of your physical board
 
-## Learn More
+### Git
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The url to your repository and to your deployed project
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+[Client repository Link](https://github.com/brittahelm/tame-client)
 
-### Code Splitting
+[Server repository Link](https://github.com/brittahelm/tame-server)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+[Deployed App Link]()
 
-### Analyzing the Bundle Size
+### Slides
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+The url to your presentation slides
 
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+[Slides Link](https://docs.google.com/presentation/d/16NyniG3zRQL8AWXdVEb-qX6eyv0xLjbKvOc_xuLJlkw/edit?usp=sharing)
