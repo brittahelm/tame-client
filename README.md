@@ -32,7 +32,7 @@ An app that allows users to track their migraines, view personal migraine statis
 | `/signup`                 | SignupPage                     | anon only  `<AnonRoute>`    | Signup form, link to login, navigate to homepage after signup |
 | `/login`                  | LoginPage                      | anon only `<AnonRoute>`     | Login form, link to signup, navigate to homepage after login  |
 | `/logout`                 | n/a                            | user only `<PrivateRoute>`  | Navigate to homepage after logout, expire session             |
-| `record`                  | NavBar, ElementList, FooterBar | user only `<PrivateRoute>`  | Enter new migraine migraines                                |
+| `/migraines/new`                  | NavBar, ElementList, FooterBar | user only `<PrivateRoute>`  | Enter new migraine migraines                                |
 | `/migraines/stats`        | NavBar, ElementList, FooterBar | user only `<PrivateRoute>`  | Shows all stats migraines                                    |
 | `/migraines/history`      | NavBar, ElementList, FooterBar | user only `<PrivateRoute>`  | Shows list of all migraines explore                                    |
 | `/explore/media      `    | SearchForm, SearchResults      | user only  `<PrivateRoute>` | Look through articles, videos explore                               |
