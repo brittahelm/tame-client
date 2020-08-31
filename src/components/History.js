@@ -27,6 +27,10 @@ export default function History(props) {
                           <br></br> {migraine.end.slice(11, 16)} on{" "}
                           {migraine.end.slice(8, 10)}.{migraine.end.slice(5, 7)}
                           .{migraine.end.slice(0, 4)}
+                        </p><br></br>
+
+                        <p>
+                          <span>Pain level: </span>{migraine.painlevel}
                         </p>
 
                         <div className="history-box-inner">

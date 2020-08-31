@@ -7,6 +7,7 @@ import {API_URL} from './config';
 
 import Home from './components/Home'
 import AddMigraine from './components/AddMigraine'
+import EditMigraine from './components/EditMigraine'
 import Stats from './components/Stats'
 import History from './components/History'
 import Media from './components/Media'
@@ -97,6 +98,12 @@ class App extends React.Component {
     axios.patch(`${API_URL}/migraines/${updatedMigraine._id}`, {
       start: updatedMigraine.start,
       end: updatedMigraine.end, 
+      painlevel: updatedMigraine.painlevel,
+      symptoms: updatedMigraine.symptoms,
+      triggers: updatedMigraine.triggers,
+      remedies: updatedMigraine.remedies,
+      notes: updatedMigraine.notes,
+      faveRemedy: updatedMigraine.faveRemedy
     },  {withCredentials: true})
     .then(() => {
         let cloneMigraines = this.state.migraines.map((migraine) => {
@@ -185,7 +192,7 @@ class App extends React.Component {
             return <History loggedInUser={this.state.loggedInUser} migraines={this.state.migraines} onLogout={this.handleLogout} onDelete={this.handleDeleteMigraine}/>
           }}  />
           <Route path="/migraines/:id/edit" render={(routeProps) => {
-            return <AddMigraine loggedInUser={this.state.loggedInUser} onLogout={this.handleLogout} onEdit={this.handleEditMigraine} {...routeProps}/>
+            return <EditMigraine loggedInUser={this.state.loggedInUser} onLogout={this.handleLogout} onEdit={this.handleEditMigraine} {...routeProps}/>
           }}  />
           <Route path="/explore" render={() => {
             return <Media onLogout={this.handleLogout}/>

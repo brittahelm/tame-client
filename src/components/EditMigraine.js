@@ -1,10 +1,12 @@
 import React from 'react';
+import axios from 'axios'
+import {API_URL} from '../config';
 import { Redirect } from 'react-router-dom';
 import Nav from './Nav';
 import Footer from './NavFooter'
 
 
-export default class AddMigraine extends React.Component {
+export default class EditMigraine extends React.Component {
   state = {
     possibleSymptoms: [
       "Headache",
@@ -54,8 +56,33 @@ export default class AddMigraine extends React.Component {
     symptoms: [],
     remedies: [],
     triggers: [],
-    startTime: ''
+    startTime: '',
+    migraine: null
   };
+
+
+  setMigraineDetails = () => {
+    let id = this.props.match.params.id;
+      axios
+        .get(`${API_URL}/migraines/${id}`, { withCredentials: true })
+        .then((res) => {
+          this.setState({
+            migraine: res.data,
+          });
+        });
+  }
+
+  componentDidMount() {
+    if(this.props.migraine != null) {
+        this.setMigraineDetails()
+    }
+  }
+
+  componentDidUpdate(newProps) {
+    if (this.props.migraines  !== newProps.migraines) {
+        this.setMigraineDetails()
+    }
+  }
 
   checkSymptom = (event) => {
     let box = event.currentTarget.value;
@@ -109,13 +136,13 @@ export default class AddMigraine extends React.Component {
     return (
       <div className="new-migraine-screen user-screen">
         <Nav onLogout={this.props.onLogout} />
-          <div><h2>Record a new migraine</h2><h4>Please provide as much information as possible, at least an estimated start time, pain level and symptoms. You can edit and add to the information later.</h4></div>
+          <div><h2>Edit your migraine</h2></div>
 
 
         <form className="new-migraine-form" onSubmit={(e) => this.props.onSubmit(e, this.state.symptoms, this.state.triggers, this.state.remedies)}>
 
             <label className="new-migraine-question">When did the migraine start?</label>
-            <input name="start" type="datetime-local" defaultValue={new Date().toISOString().substring(0, 16)} max={new Date().toISOString().substring(0, 16)} onChange={this.setStartTime}/>
+            <input name="start" type="datetime-local" defaultValue={this.state.migraine.start} max={new Date().toISOString().substring(0, 16)} onChange={this.setStartTime}/>
 
 
             <label className="new-migraine-question">When did the migraine end?</label>
@@ -249,11 +276,12 @@ export default class AddMigraine extends React.Component {
 
           {this.props.errorMessage && <p className="auth-error">{this.props.errorMessage}</p>}
 
+
             <button
               className="button"
-              type="submit"
+              onClick={() => this.props.onEdit(this.state.migraine)}
             >
-              Submit
+              Edit
             </button>
 
         </form>
