@@ -40,8 +40,7 @@ export default class Stats extends React.Component {
 		  }
 	}
 
-
-	componentDidMount() {
+	setTriggerDetails = () => {
 		let triggerStats= {}
 		this.props.migraines.forEach((migraine) => {
 			
@@ -147,10 +146,35 @@ export default class Stats extends React.Component {
 		}
 
 		let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+		let monthlyNums = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 		let currentDate = new Date();
 		let currentMonth = currentDate.getMonth();
 		let sortedMonths = months.slice(currentMonth+1).concat(months.slice(0, currentMonth+1))
 		
+
+
+		this.props.migraines.forEach((migraine) => {
+			let month;
+			migraine.start.slice(5, 6) === '0' ? month = migraine.start.slice(6, 7) : month = migraine.start.slice(5, 7);
+
+			if (migraine.start.slice(0, 10) === migraine.end.slice(0, 10)) {
+				monthlyNums[month] = monthlyNums[month] + 1
+			}
+
+			else if (migraine.start.slice(0, 7) === migraine.end.slice(0, 7)) {
+				let days = migraine.end.slice(8, 10) - migraine.start.slice(8, 10) +1
+				monthlyNums[month] = monthlyNums[month] + days;
+			}
+
+			else if (migraine.start.slice(0, 5) === migraine.end.slice(0, 5)) {
+				
+			}
+
+			console.log(monthlyNums)
+
+		})
+
+
 		
 		this.setState({
 			triggerData: triggerInfo,
@@ -158,20 +182,33 @@ export default class Stats extends React.Component {
 		})
 	}
 
+	componentDidMount() {
+		
+		if(this.props.migraines.length) {
+			this.setTriggerDetails()
+		}
+		
+	}
+
+	componentDidUpdate (newProps) {
+		if (this.props.migraines.length  !== newProps.migraines.length) {
+			this.setTriggerDetails()
+		}
+	}
+
   render() {
-	console.log('INSIDE RENDER', this.state.triggerData)
-	// if (!this.state.triggerData){
-	// 	// return <p>Loading ....</p>
-	// }
+	if (!this.state.triggerData){
+		return <p>Loading ....</p>
+	}
 
     return (
       <div className="user-screen">
         <Nav onLogout={this.props.onLogout} />
         <h2>Stats</h2>
-		<div className="stats-graph">
+		{/* <div className="stats-graph">
           <h3>Your migraines this year</h3>
           <Line data={this.state.timeData} />
-        </div>
+        </div> */}
         <div className="stats-graph">
           <h3>Your most common triggers</h3>
           <Doughnut data={this.state.triggerData} />

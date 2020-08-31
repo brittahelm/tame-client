@@ -1,7 +1,7 @@
 import React from 'react'
 import Nav from './Nav'
 import Footer from './NavFooter'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 
 export default function History(props) {
     if(!props.loggedInUser){
@@ -81,9 +81,9 @@ export default function History(props) {
                         >
                           Delete
                         </button>
-                        <a href={`/migraines/${migraine._id}/edit`}>
+                        <Link to={`/migraines/${migraine._id}/edit`}>
                           <button className="button">Edit</button>
-                        </a>
+                        </Link>
                         </div>
                       </div>
                     );

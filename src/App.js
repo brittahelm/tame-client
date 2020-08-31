@@ -49,8 +49,6 @@ class App extends React.Component {
   handleCreateMigraine = (event, symptoms, triggers, remedies) => {
     event.preventDefault()
     const {start, end, painlevel, notes, faveRemedy} = event.currentTarget
-    
-    console.log(faveRemedy.value)
 
     axios.post(`${API_URL}/migraines/create`, {
       start: start.value,

@@ -230,13 +230,12 @@ export default class AddMigraine extends React.Component {
             <div className="select-inline">
             {this.state.possibleTriggers.map((ptrig, i) => {
               return (
-                <div className="select-option">
+                <div key={ptrig + 1} className="select-option">
                 <input
                   onChange={this.checkTrigger}
                   type="checkbox"
                   name="triggers"
                   id={ptrig}
-                  key={ptrig + 1}
                   value={ptrig}
                 />
                 <label for={ptrig}> {ptrig}</label>
@@ -249,13 +248,12 @@ export default class AddMigraine extends React.Component {
             <div className="select-inline">
             {this.state.possibleRemedies.map((prem, i) => {
               return (
-                <div className="select-option">
+                <div key={prem + 1} className="select-option">
                 <input
                   onChange={this.checkRemedy}
                   type="checkbox"
                   name="remedies"
                   id={prem}
-                  key={prem + 1}
                   value={prem}
                 />
                 <label for={prem}> {prem}</label>
