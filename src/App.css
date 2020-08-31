@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-size: 10px;
 }
 
 .App-logo {
@@ -28,11 +29,354 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.hedgehog-logo {
+  width: 120px;
+}
+
+p {
+  font-size: 0.85rem;
+}
+
+h1 {
+  font-family: 'Poiret One', cursive;
+  font-size: 5rem;
+  font-weight: bold;
+  color: rgb(182, 185, 204);
+  margin-bottom: 0;
+}
+
+h2 {
+  font-size: 2rem;
+  color: rgb(182, 185, 204);
+  margin-top: 80px;
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+
+h4 {
+  font-size: 1.1rem;
+  font-weight: 300;
+}
+
+
+.button {
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid rgb(125, 218, 255);
+  font-size: 0.9rem;
+  background-color: white;
+  color: rgb(125, 218, 255);
+  margin: 5px auto;
+}
+
+.button:hover {
+  background-color: rgb(125, 218, 255);
+  color: white;
+}
+
+.button > a {
+  color: rgb(125, 218, 255);
+}
+
+.button:hover > a {
+  text-decoration: none;
+  color: white;
+}
+
+.button:focus {
+  border: 1px solid rgb(125, 218, 255);
+}
+
+.start-screen {
+  margin-top: 50px;
+}
+
+.start-about-box {
+  background-color: rgb(182, 185, 204);
+  margin-bottom: 0;
+}
+
+.start-about-info {
+  width: 300px;
+  margin: 130px auto 0;
+  padding: 20px;
+  color: white;
+}
+
+.auth-screen {
+  margin: 20vh auto;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: auto;
+}
+
+.auth-form > input {
+  margin: 5px;
+  font-size: 1.2rem;
+  border: none;
+  border-bottom: 1px solid rgb(125, 218, 255);
+  color: rgb(125, 218, 255);
+}
+
+.auth-form > input:focus {
+  outline: none;
+  background-color: white;
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: rgb(125, 218, 255) !important;
+}
+
+
+.auth-form > input::placeholder {
+  font-size: 0.8rem;
+  color: rgb(182, 185, 204);
+}
+
+.auth-error {
+  margin: 15px auto;
+  padding: 5px;
+  background-color: rgb(255, 167, 167);
+  color: white;
+  width: 300px;
+}
+
+.nav-bar {
+  background-color: rgb(125, 218, 255);
+  height: 60px;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  z-index: 1;
+}
+
+.nav-bar p {
+  font-size: 2rem;
+  font-family: 'Poiret One', cursive;
+  color: white;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.nav-footer {
+  background-color: rgb(125, 218, 255);
+  height: 75px;
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.nav-footer > a {
+  color: white;
+  font-size: 2rem;
+}
+
+.nav-footer > a > span{
+  margin: 0 25px 0 10px;
+  display: none;
+}
+
+@media (min-width: 1000px) {
+  .nav-bar {
+    height: 40px;
   }
-  to {
-    transform: rotate(360deg);
+  .nav-footer {
+    height: 30px;
+    bottom: auto;
+    top: 40px;
+    justify-content: flex-start;
   }
+  .nav-footer > a {
+    font-size: 1.2rem;
+    color: rgb(71, 77, 158)
+  }
+  .nav-footer > a > span{
+    display: inline-block;
+  }
+
+  .nav-footer i {
+    display: none;
+  }
+}
+
+.user-screen {
+  margin-bottom: 100px;
+}
+
+.new-migraine-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: auto;
+}
+
+.new-migraine-screen h4 {
+  width: 350px;
+  margin: 0 auto 20px;
+}
+
+.new-migraine-form input, select, textarea {
+  font-size: 0.85rem;
+}
+
+.new-migraine-question {
+  margin-top: 50px;
+  margin-bottom: 0px;
+  font-size: 1rem;
+}
+
+.sub-label {
+  margin-top: 0;
+}
+
+.select-inline {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.radio-inline {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.radio-inline > div {
+  display: inline-block;
+}
+
+.radio-inline label {
+  margin-left: 3px;
+  font-size: 0.85rem;
+}
+
+.select-option {
+  display: inline-block;
+  margin: 5px;
+}
+
+.select-option > label {
+  margin-left: 3px;
+  font-size: 0.85rem;
+}
+
+.new-migraine-form > textarea {
+  margin-bottom: 20px;
+}
+
+.new-migraine-form > button {
+  margin-bottom: 50px;
+}
+
+.media-box {
+  width: 350px;
+  margin: 50px auto;
+  padding: 10px;
+  z-index: -1;
+  
+}
+
+.media-box-inner {
+  border: 1px solid rgb(71, 77, 158);
+  padding: 10px 5px;
+}
+
+.media-box h4 {
+  color: rgb(71, 77, 158);
+  font-size: 1.3rem;
+  margin: 0 auto 20px;
+}
+
+.media-box h5 {
+  margin-right: 15px;
+}
+
+.media-box a {
+  color: rgb(182, 185, 204);
+  font-size: 0.85rem;
+}
+
+.media-box div {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.fa-bookmark {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  font-size: 1.5rem;
+  color: rgb(125, 218, 255);
+}
+
+.history-box {
+  width: 350px;
+  margin: 50px auto;
+  text-align: left;
+  border: 1px solid rgb(125, 218, 255);
+  padding: 10px 15px;
+}
+
+.history-box span {
+  color: rgb(182, 185, 204);
+  margin-top: 10px;
+}
+
+.history-box ul {
+  padding-left: 25px;
+}
+
+.history-box li {
+  font-size: 0.85rem;
+}
+
+.history-box p {
+  margin: 0;
+}
+
+.history-box-inner {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+
+.history-box-inner-group {
+  display: flex;
+  flex-direction: column;
+  width: 130px;
+}
+
+.history-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.history-buttons button {
+  margin: 10px 0 5px;
+}
+
+.stats-graph {
+  max-width: 80vw;
+  margin: 50px auto;
 }

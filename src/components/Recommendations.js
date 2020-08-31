@@ -1,11 +1,13 @@
 import React from 'react'
 import Nav from './Nav'
+import Footer from './NavFooter'
 
-export default function Recommendations() {
+export default function Recommendations(props) {
     return (
         <div>
-            <Nav/>
+            <Nav onLogout={props.onLogout}/>
             <h2>Explore user recommendations</h2>
+            <Footer/>
         </div>
     )
 }

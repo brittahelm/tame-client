@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
-import {Switch, Route, withRouter} from 'react-router-dom';
+import {Switch, Route, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import {API_URL} from './config';
 
@@ -20,7 +20,10 @@ class App extends React.Component {
 
   state = {
     migraines: [],
-    loggedInUser: null
+    loggedInUser: null,
+    signUpError: null,
+    logInError: null,
+    migraineFormError: null
   }
 
 
@@ -45,9 +48,10 @@ class App extends React.Component {
 
   handleCreateMigraine = (event, symptoms, triggers, remedies) => {
     event.preventDefault()
-    console.log(symptoms, triggers, remedies)
-    const {start, end, painlevel} = event.currentTarget
+    const {start, end, painlevel, notes, faveRemedy} = event.currentTarget
     
+    console.log(faveRemedy.value)
+
     axios.post(`${API_URL}/migraines/create`, {
       start: start.value,
       end: end.value,
@@ -55,9 +59,20 @@ class App extends React.Component {
       symptoms: symptoms,
       triggers: triggers,
       remedies: remedies,
+      notes: notes.value,
+      faveRemedy: faveRemedy.value
     }, {withCredentials: true})
       .then((res) => {
-        this.props.history.push('/migraines/history')
+        let cloneMigraines = JSON.parse(JSON.stringify(this.state.migraines))
+        cloneMigraines.push(res.data)
+        this.setState({
+          migraines: cloneMigraines
+        }, () => {this.props.history.push('/migraines/history')})
+      })
+      .catch((err) => {
+        this.setState({
+          migraineFormError: err.response.data.errorMessage
+        })
       })
   }
 
@@ -117,7 +132,9 @@ class App extends React.Component {
         })
       }) 
       .catch((err) => {
-        console.log(err)
+        this.setState({
+          signUpError: err.response.data.errorMessage
+        })
       }) 
   }
 
@@ -134,10 +151,16 @@ class App extends React.Component {
         }, () => {
           this.props.history.push('/migraines/new')
         })
-      })  
+      })
+      .catch((err) => {
+        this.setState({
+          logInError: err.response.data.errorMessage
+        })
+      }) 
   }
 
   handleLogout = () => {
+    console.log('TIME TO LOG OUT')
     axios.post(`${API_URL}/logout`, {}, {withCredentials: true})
       .then(() => {
         this.setState({
@@ -155,28 +178,28 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={Home}/>
           <Route path="/migraines/new" render={(routeProps) => {
-            return <AddMigraine loggedInUser={this.state.loggedInUser} onSubmit={this.handleCreateMigraine} onLogout={this.handleLogOut} {...routeProps}/>
+            return <AddMigraine loggedInUser={this.state.loggedInUser} onSubmit={this.handleCreateMigraine} onLogout={this.handleLogout} errorMessage={this.state.migraineFormError} {...routeProps}/>
           }}  />
           <Route path="/migraines/stats" render={() => {
-            return <Stats migraines={this.state.migraines} onLogout={this.handleLogOut}/>
+            return <Stats loggedInUser={this.state.loggedInUser} migraines={this.state.migraines} onLogout={this.handleLogout}/>
           }}  />
           <Route path="/migraines/history" render={() => {
             return <History loggedInUser={this.state.loggedInUser} migraines={this.state.migraines} onLogout={this.handleLogout} onDelete={this.handleDeleteMigraine}/>
           }}  />
           <Route path="/migraines/:id/edit" render={(routeProps) => {
-            return <AddMigraine loggedInUser={this.state.loggedInUser} onLogout={this.handleLogOut} onEdit={this.handleEditMigraine} {...routeProps}/>
+            return <AddMigraine loggedInUser={this.state.loggedInUser} onLogout={this.handleLogout} onEdit={this.handleEditMigraine} {...routeProps}/>
           }}  />
-          <Route path="/explore/media" render={() => {
-            return <Media/>
+          <Route path="/explore" render={() => {
+            return <Media onLogout={this.handleLogout}/>
           }}  />
-          <Route path="/explore/recommendations" render={() => {
-            return <Recommendations/>
+          <Route path="/recommendations" render={() => {
+            return <Recommendations onLogout={this.handleLogout}/>
           }}  />
           <Route path="/login" render={() => {
-            return <Login onLogin={this.handleLogin}/>
+            return <Login onLogin={this.handleLogin} errorMessage={this.state.logInError}/>
           }}  />
-          <Route path="/signup" render={(routeProps) => {
-            return <Signup onSignup={this.handleSignup}/>
+          <Route path="/signup" render={() => {
+            return <Signup onSignup={this.handleSignup} errorMessage={this.state.signUpError}/>
           }}  />
         </Switch>
       </div>
