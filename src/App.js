@@ -63,7 +63,7 @@ class App extends React.Component {
     }, {withCredentials: true})
       .then((res) => {
         let cloneMigraines = JSON.parse(JSON.stringify(this.state.migraines))
-        cloneMigraines.push(res.data)
+        cloneMigraines.unshift(res.data)
         this.setState({
           migraines: cloneMigraines
         }, () => {this.props.history.push('/migraines/history')})
@@ -94,24 +94,31 @@ class App extends React.Component {
       })
   }
 
-  handleEditMigraine = (updatedMigraine) => {
-    axios.patch(`${API_URL}/migraines/${updatedMigraine._id}`, {
-      start: updatedMigraine.start,
-      end: updatedMigraine.end, 
-      painlevel: updatedMigraine.painlevel,
-      symptoms: updatedMigraine.symptoms,
-      triggers: updatedMigraine.triggers,
-      remedies: updatedMigraine.remedies,
-      notes: updatedMigraine.notes,
-      faveRemedy: updatedMigraine.faveRemedy
-    },  {withCredentials: true})
+  handleEditMigraine = (event, symptoms, triggers, remedies, updatedMigraine) => {
+    event.preventDefault()
+    const {start, end, painlevel, notes, faveRemedy} = event.currentTarget
+    console.log('UpdatedMigraine', updatedMigraine)
+    let newMigraine = {
+      start: start.value,
+      end: end.value,
+      painlevel: painlevel.value,
+      symptoms: symptoms,
+      triggers: triggers,
+      remedies: remedies,
+      notes: notes.value,
+      faveRemedy: faveRemedy.value
+    }
+    axios.patch(`${API_URL}/migraines/${updatedMigraine._id}`, newMigraine,  {withCredentials: true})
     .then(() => {
         let cloneMigraines = this.state.migraines.map((migraine) => {
+            console.log(migraine._id)
+            console.log(updatedMigraine._id)
             if (migraine._id === updatedMigraine._id) {
-              migraine = updatedMigraine 
+              migraine = newMigraine 
             }
             return migraine
         })
+        console.log('cloneMigraines', cloneMigraines)
         this.setState({
           migraines: cloneMigraines
         }, () => {

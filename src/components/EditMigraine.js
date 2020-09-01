@@ -57,7 +57,7 @@ export default class EditMigraine extends React.Component {
     remedies: [],
     triggers: [],
     startTime: '',
-    migraine: null
+    migraine: this.props.migraine
   };
 
 
@@ -68,18 +68,22 @@ export default class EditMigraine extends React.Component {
         .then((res) => {
           this.setState({
             migraine: res.data,
+            symptoms: res.data.symptoms,
+            triggers: res.data.triggers,
+            remedies: res.data.remedies
           });
         });
   }
 
   componentDidMount() {
-    if(this.props.migraine != null) {
+    if(!this.state.migraine) {
         this.setMigraineDetails()
     }
+
   }
 
   componentDidUpdate(newProps) {
-    if (this.props.migraines  !== newProps.migraines) {
+    if (!newProps.migraine && !this.state.migraine) {
         this.setMigraineDetails()
     }
   }
@@ -133,21 +137,23 @@ export default class EditMigraine extends React.Component {
     if (!this.props.loggedInUser) {
       return <Redirect to="/login" />;
     }
+    if (!this.state.migraine) {
+        return <p>Loading ... </p>
+    }
     return (
       <div className="new-migraine-screen user-screen">
         <Nav onLogout={this.props.onLogout} />
           <div><h2>Edit your migraine</h2></div>
 
 
-        <form className="new-migraine-form" onSubmit={(e) => this.props.onSubmit(e, this.state.symptoms, this.state.triggers, this.state.remedies)}>
+        <form className="new-migraine-form" onSubmit={(e) => this.props.onEdit(e, this.state.symptoms, this.state.triggers, this.state.remedies, this.state.migraine)}>
 
             <label className="new-migraine-question">When did the migraine start?</label>
-            <input name="start" type="datetime-local" defaultValue={this.state.migraine.start} max={new Date().toISOString().substring(0, 16)} onChange={this.setStartTime}/>
+            <input name="start" type="datetime-local" defaultValue={this.state.migraine.start.slice(0, 16)} max={new Date().toISOString().substring(0, 16)} onChange={this.setStartTime}/>
 
 
             <label className="new-migraine-question">When did the migraine end?</label>
-            <label className="sub-label">Leave empty if migraine hasn't ended yet.</label>
-            <input name="end" type="datetime-local" min={this.state.startTime}/>
+            <input name="end" defaultValue={this.state.migraine.end.slice(0, 16)} type="datetime-local" min={this.state.startTime}/>
 
             
             <label className="new-migraine-question">How bad is the pain?</label>
@@ -159,6 +165,9 @@ export default class EditMigraine extends React.Component {
               name="painlevel"
               id="1"
               value="1"
+              defaultChecked = {
+                this.state.migraine.painlevel === 1 ? true : false
+              }
             />
             <label> 1</label>
             </div>
@@ -168,6 +177,9 @@ export default class EditMigraine extends React.Component {
               name="painlevel"
               id="2"
               value="2"
+              defaultChecked = {
+                this.state.migraine.painlevel === 2 ? true : false
+              }
             />
             <label> 2</label>
             </div>
@@ -177,6 +189,9 @@ export default class EditMigraine extends React.Component {
               name="painlevel"
               id="3"
               value="3"
+              defaultChecked = {
+                this.state.migraine.painlevel === 3 ? true : false
+              }
             />
             <label> 3</label>
             </div>
@@ -186,6 +201,9 @@ export default class EditMigraine extends React.Component {
               name="painlevel"
               id="4"
               value="4"
+              defaultChecked = {
+                this.state.migraine.painlevel === 4 ? true : false
+              }
             />
             <label> 4</label>
             </div>
@@ -195,6 +213,9 @@ export default class EditMigraine extends React.Component {
               name="painlevel"
               id="5"
               value="5"
+              defaultChecked = {
+                this.state.migraine.painlevel === 5 ? true : false
+              }
             />
             <label> 5</label>
             </div>
@@ -211,6 +232,9 @@ export default class EditMigraine extends React.Component {
                   name="symptoms"
                   id={psymp}
                   value={psymp}
+                  defaultChecked = {
+                    this.state.migraine.symptoms.includes(psymp) ? true : false
+                }
                 />
                 <label> {psymp}</label>
                 </div>
@@ -229,6 +253,9 @@ export default class EditMigraine extends React.Component {
                   name="triggers"
                   id={ptrig}
                   value={ptrig}
+                  defaultChecked = {
+                    this.state.migraine.triggers.includes(ptrig) ? true : false
+                }
                 />
                 <label> {ptrig}</label>
                 </div>
@@ -247,6 +274,9 @@ export default class EditMigraine extends React.Component {
                   name="remedies"
                   id={prem}
                   value={prem}
+                  defaultChecked = {
+                    this.state.migraine.remedies.includes(prem) ? true : false
+                }
                 />
                 <label> {prem}</label>
                 </div>
@@ -257,7 +287,7 @@ export default class EditMigraine extends React.Component {
 
             <label className="new-migraine-question">Which remedy helped you most?</label>
             <select name="faveRemedy" id="faveRemedy">
-              <option value="none">none</option>
+              <option defaultValue={this.state.migraine.faveRemedy}>{this.state.migraine.faveRemedy}</option>
 
               {
                 this.state.remedies.map((remedy, i) => {
@@ -271,7 +301,7 @@ export default class EditMigraine extends React.Component {
 
 
             <label className="new-migraine-question">Notes</label>
-            <textarea name="notes" cols="1" rows="5"/>
+            <textarea name="notes" cols="1" rows="5" defaultValue={this.state.migraine.notes}/>
 
 
           {this.props.errorMessage && <p className="auth-error">{this.props.errorMessage}</p>}
@@ -279,7 +309,7 @@ export default class EditMigraine extends React.Component {
 
             <button
               className="button"
-              onClick={() => this.props.onEdit(this.state.migraine)}
+              type="submit"
             >
               Edit
             </button>

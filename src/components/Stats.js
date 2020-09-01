@@ -12,32 +12,7 @@ export default class Stats extends React.Component {
 	state = {
 		triggerData: null,
 		symptomData: {},
-		timeData: {
-			labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-			datasets: [
-			  {
-				label: 'Migraine days each month',
-				fill: false,
-				lineTension: 0.1,
-				backgroundColor: 'rgba(75,192,192,0.4)',
-				borderColor: 'rgba(75,192,192,1)',
-				borderCapStyle: 'butt',
-				borderDash: [],
-				borderDashOffset: 0.0,
-				borderJoinStyle: 'miter',
-				pointBorderColor: 'rgba(75,192,192,1)',
-				pointBackgroundColor: '#fff',
-				pointBorderWidth: 1,
-				pointHoverRadius: 5,
-				pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-				pointHoverBorderColor: 'rgba(220,220,220,1)',
-				pointHoverBorderWidth: 2,
-				pointRadius: 1,
-				pointHitRadius: 10,
-				data: [65, 59, 80, 81, 56, 55, 40]
-			  }
-			]
-		  }
+		timeData: {}
 	}
 
 	setTriggerDetails = () => {
@@ -170,15 +145,43 @@ export default class Stats extends React.Component {
 				
 			}
 
-			console.log(monthlyNums)
+			
 
 		})
+		let sortedMonthlyNums = monthlyNums.slice(currentMonth+2).concat(monthlyNums.slice(0, currentMonth+2))
 
+		let timeInfo = {
+			labels: sortedMonths,
+			datasets: [
+			  {
+				label: 'Migraine days each month',
+				fill: false,
+				lineTension: 0.1,
+				backgroundColor: 'rgba(75,192,192,0.4)',
+				borderColor: 'rgba(75,192,192,1)',
+				borderCapStyle: 'butt',
+				borderDash: [],
+				borderDashOffset: 0.0,
+				borderJoinStyle: 'miter',
+				pointBorderColor: 'rgba(75,192,192,1)',
+				pointBackgroundColor: '#fff',
+				pointBorderWidth: 1,
+				pointHoverRadius: 5,
+				pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+				pointHoverBorderColor: 'rgba(220,220,220,1)',
+				pointHoverBorderWidth: 2,
+				pointRadius: 1,
+				pointHitRadius: 10,
+				data: sortedMonthlyNums
+			  }
+			]
+		  }
 
 		
 		this.setState({
 			triggerData: triggerInfo,
-			symptomData: symptomInfo
+			symptomData: symptomInfo,
+			timeData: timeInfo
 		})
 	}
 
@@ -205,10 +208,10 @@ export default class Stats extends React.Component {
       <div className="user-screen">
         <Nav onLogout={this.props.onLogout} />
         <h2>Stats</h2>
-		{/* <div className="stats-graph">
+		<div className="stats-graph">
           <h3>Your migraines this year</h3>
           <Line data={this.state.timeData} />
-        </div> */}
+        </div>
         <div className="stats-graph">
           <h3>Your most common triggers</h3>
           <Doughnut data={this.state.triggerData} />

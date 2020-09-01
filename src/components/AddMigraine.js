@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import {API_URL} from '../config';
 import { Redirect } from 'react-router-dom';
 import Nav from './Nav';
 import Footer from './NavFooter'
@@ -6,6 +8,7 @@ import Footer from './NavFooter'
 
 export default class AddMigraine extends React.Component {
   state = {
+    loggedInUser: this.props.loggedInUser,
     possibleSymptoms: [
       "Headache",
       "Nausea",
@@ -57,6 +60,34 @@ export default class AddMigraine extends React.Component {
     startTime: ''
   };
 
+  componenetDidMount(){
+    if (!this.state.loggedInUser) {
+      axios.get(`${API_URL}/user`, {withCredentials: true})
+        .then((res) => {
+            this.setState({
+              loggedInUser: res.data
+            })
+        })
+        .catch(() =>{
+          return <Redirect to="/login" />
+        })
+    }
+  }
+
+  componentDidUpdate (newProps) {
+		if (this.state.loggedInUser  !== newProps.loggedInUser) {
+			axios.get(`${API_URL}/user`, {withCredentials: true})
+        .then((res) => {
+            this.setState({
+              loggedInUser: res.data
+            })
+        })
+        .catch(() =>{
+          return <Redirect to="/login" />
+        })
+		}
+	}
+
   checkSymptom = (event) => {
     let box = event.currentTarget.value;
     let cloneSymptoms = this.state.symptoms;
@@ -103,8 +134,8 @@ export default class AddMigraine extends React.Component {
   }
 
   render() {
-    if (!this.props.loggedInUser) {
-      return <Redirect to="/login" />;
+    if (!this.state.loggedInUser) {
+      return <p>Loading</p>;
     }
     return (
       <div className="new-migraine-screen user-screen">

@@ -2,8 +2,15 @@ import React from 'react'
 import Nav from './Nav'
 import Footer from './NavFooter'
 import { Redirect, Link } from 'react-router-dom'
+import axios from 'axios';
+import {API_URL} from '../config';
+
 
 export default function History(props) {
+
+  let loggedInUser = props.loggedInUser;
+
+  
     if(!props.loggedInUser){
         return <Redirect to="/login" />
     }
@@ -11,6 +18,7 @@ export default function History(props) {
         <div className="user-screen">
             <Nav onLogout={props.onLogout}/>
             <h2>History</h2>
+            <div className="history-box-outer">
             {   
                 props.migraines.map((migraine, i) => {
                     return (
@@ -93,6 +101,7 @@ export default function History(props) {
                     );
                 })
             }
+            </div>
             <Footer/>
         </div>
     )

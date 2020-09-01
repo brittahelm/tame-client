@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 export default function Home() {
     return (
         <div className="start-screen">
-            <img className="hedgehog-logo" src="https://cdn.pixabay.com/photo/2020/02/05/00/46/hedgehog-4819833_1280.png" alt=""/>
+            <img className="hedgehog-logo" src="https://res.cloudinary.com/deravtpot/image/upload/v1598883877/hedgehog-4819833_1920_darhfd.png" alt=""/>
             <h1>tame</h1>
             <h3>Manage your migraines</h3>
             <button className="button"><Link to="/login">Log In</Link></button>
