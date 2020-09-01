@@ -6,21 +6,51 @@ import axios from 'axios';
 import {API_URL} from '../config';
 
 
-export default function History(props) {
+export default class History extends React.Component {
 
-  let loggedInUser = props.loggedInUser;
+  state = {
+    loggedInUser: this.props.loggedInUser
+  }
 
-  
-    if(!props.loggedInUser){
-        return <Redirect to="/login" />
+  componentDidMount(){
+    if (!this.state.loggedInUser) {
+      axios.get(`${API_URL}/user`, {withCredentials: true})
+        .then((res) => {
+            this.setState({
+              loggedInUser: res.data
+            })
+        })
+        .catch(() =>{
+          return <Redirect to="/login" />
+        })
+    }
+  }
+
+  componentDidUpdate (newProps) {
+		if (this.state.loggedInUser  !== newProps.loggedInUser) {
+			axios.get(`${API_URL}/user`, {withCredentials: true})
+        .then((res) => {
+            this.setState({
+              loggedInUser: res.data
+            })
+        })
+        .catch(() =>{
+          return <Redirect to="/login" />
+        })
+		}
+	}
+
+  render() {
+    if (!this.state.loggedInUser) {
+      return <p>Loading</p>;
     }
     return (
         <div className="user-screen">
-            <Nav onLogout={props.onLogout}/>
+            <Nav onLogout={this.props.onLogout}/>
             <h2>History</h2>
             <div className="history-box-outer">
             {   
-                props.migraines.map((migraine, i) => {
+                this.props.migraines.map((migraine, i) => {
                     return (
                       <div className="history-box" key={migraine + i}>
                         <p>
@@ -89,7 +119,7 @@ export default function History(props) {
                         <div className="history-buttons">
                         <button
                           className="button"
-                          onClick={() => props.onDelete(migraine._id)}
+                          onClick={() => this.props.onDelete(migraine._id)}
                         >
                           Delete
                         </button>
@@ -105,4 +135,5 @@ export default function History(props) {
             <Footer/>
         </div>
     )
+  }
 }

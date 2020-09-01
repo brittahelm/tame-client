@@ -60,7 +60,7 @@ export default class AddMigraine extends React.Component {
     startTime: ''
   };
 
-  componenetDidMount(){
+  componentDidMount(){
     if (!this.state.loggedInUser) {
       axios.get(`${API_URL}/user`, {withCredentials: true})
         .then((res) => {
