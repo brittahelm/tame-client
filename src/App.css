@@ -368,8 +368,45 @@ input:-webkit-autofill:active {
 
 .nightmode {
   background-color: #3c3842;
-  color: white;
+  color: lightgray;
 }
+
+.tip-box-outer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column
+}
+
+.tip-box-inner {
+  margin: 50px;
+  max-width: calc(50vw - 100px)
+}
+
+.tip-box-list {
+  margin-top: 70px;
+}
+
+.tip-box-list h4 {
+  margin-top: 30px;
+}
+
+.tip-button {
+  font-size: 0.7rem;
+  width: 60px;
+  height: 20px;
+  border-radius: 5px;
+  margin: 5px auto;
+}
+
+.tip-like-button {
+  border-color: rgb(71, 77, 158);
+  color: rgb(71, 77, 158);
+}
+
+.tip-like-button:hover {
+  background-color: rgb(71, 77, 158);
+}
+
 
 
 
@@ -380,6 +417,10 @@ input:-webkit-autofill:active {
   .history-box-outer {
     display: flex;
     flex-wrap: wrap;
+  }
+
+  .tip-box-outer {
+    flex-direction: row
   }
 }
 

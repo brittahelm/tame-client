@@ -204,9 +204,17 @@ export default class Stats extends React.Component {
 		return <p>Loading ....</p>
 	}
 
+	if(!this.props.migraines.length) {
+		return <div className="user-screen">
+        <Nav onLogout={this.props.onLogout} onNightmode={this.props.onNightmode}/>
+        <h2>Stats</h2>
+		<p>No data yet.</p>
+		</div>
+	}
+
     return (
       <div className="user-screen">
-        <Nav onLogout={this.props.onLogout} />
+        <Nav onLogout={this.props.onLogout} onNightmode={this.props.onNightmode}/>
         <h2>Stats</h2>
 		<div className="stats-graph">
           <h3>Your migraines this year</h3>

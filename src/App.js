@@ -21,10 +21,12 @@ class App extends React.Component {
 
   state = {
     migraines: [],
+    tips: [],
     loggedInUser: null,
     signUpError: null,
     logInError: null,
-    migraineFormError: null
+    migraineFormError: null,
+    tipFormError: null
   }
 
 
@@ -32,8 +34,12 @@ class App extends React.Component {
   componentDidMount(){
     axios.get(`${API_URL}/migraines`, {withCredentials: true})
       .then((res) => {
-          this.setState({
-            migraines: res.data
+        axios.get(`${API_URL}/tips`, {withCredentials: true})
+          .then((tipres) => {
+            this.setState({
+              migraines: res.data,
+              tips: tipres.data
+            })
           })
       })
       if (!this.state.loggedInUser){
@@ -189,6 +195,64 @@ class App extends React.Component {
     body.classList.contains('nightmode') ? body.classList.remove('nightmode') : body.classList.add('nightmode')
   }
 
+
+  handleCreateTip = (event) => {
+    event.preventDefault()
+    const {tipname, tipdescription} = event.currentTarget
+    axios.post(`${API_URL}/tips/create`, {
+      name: tipname.value,
+      description: tipdescription.value
+    }, {withCredentials: true})
+      .then((res) => {
+        let cloneTips = JSON.parse(JSON.stringify(this.state.tips))
+        cloneTips.unshift(res.data)
+        this.setState({
+          tips: cloneTips
+        }, () => {this.props.history.push('/recommendations')})
+      })
+      .catch((err) => {
+        this.setState({
+          tipFormError: err.response.data.errorMessage
+        })
+      })
+  }
+
+
+  handleDeleteTip = (id) => {
+    axios.delete(`${API_URL}/tips/${id}`, {withCredentials: true})
+      .then(() => {
+          
+        let filteredTips = this.state.tips.filter((tip) => {
+          return tip._id !== id
+        })
+
+        this.setState({
+          tips: filteredTips
+        }, () => {
+          this.props.history.push('/recommendations')
+        })
+
+      })
+  }
+
+  handleLikeTip = (id) => {
+    axios.patch(`${API_URL}/tips/${id}`, {}, {withCredentials: true})
+    .then((updatedTip) => {
+        let cloneTips = this.state.tips.map((tip) => {
+            if (tip._id === id) {
+              tip = updatedTip.data 
+            }
+            return tip
+        })
+        this.setState({
+          tips: cloneTips
+        }, () => {
+          this.props.history.push('/recommendations')
+        })
+    })
+  }
+
+
   render() {
     return (
       <div className="App">
@@ -210,7 +274,7 @@ class App extends React.Component {
             return <Media onLogout={this.handleLogout} onNightmode={this.handleNightmode}/>
           }}  />
           <Route path="/recommendations" render={() => {
-            return <Recommendations onLogout={this.handleLogout}/>
+            return <Recommendations onLogout={this.handleLogout} onNightmode={this.handleNightmode} tips={this.state.tips} loggedInUser={this.state.loggedInUser} onSubmit={this.handleCreateTip} onDelete={this.handleDeleteTip} onLike={this.handleLikeTip}/>
           }}  />
           <Route path="/login" render={() => {
             return <Login onLogin={this.handleLogin} errorMessage={this.state.logInError}/>

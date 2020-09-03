@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Nav from './Nav'
 import Footer from './NavFooter'
+import { Link } from 'react-router-dom'
 
 const axios = require('axios');
 
@@ -62,6 +63,9 @@ export default class Media extends Component {
                 }
                 </div>
                 </div>
+                <Link to="/recommendations">
+                    <button className="button">See Tips</button>
+                </Link>
                 <Footer/>
             </div>
         )
