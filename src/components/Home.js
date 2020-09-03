@@ -12,7 +12,7 @@ export default function Home() {
             <div className="start-about-box">
             <article className="start-about-info">
                 <h4>About tame</h4>
-                <p>Living with migraines isn't easy - but don't let them take over your life. Keep track of your symptoms, triggers and the remedies that work for you with tame. Sign up for free to get started or log in as testuser@testuser.com (password: test@123) if you're just here for the code.</p> 
+                <p>Living with migraines isn't easy - but don't let them take over your life. Keep track of your symptoms, triggers and the remedies that work for you with tame. Sign up for free to get started or log in as testuser@testuser.com (password: Testuser@123) if you're just here for the code.</p> 
             </article> 
             </div>
         </div>

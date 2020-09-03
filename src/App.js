@@ -165,8 +165,9 @@ class App extends React.Component {
         })
       })
       .catch((err) => {
+        console.log(err.response)
         this.setState({
-          logInError: err.response.data.errorMessage
+          logInError: err.response.data.error
         })
       }) 
   }
@@ -183,6 +184,10 @@ class App extends React.Component {
       })
   }
 
+  handleNightmode = () => {
+    let body = document.querySelector('body')
+    body.classList.contains('nightmode') ? body.classList.remove('nightmode') : body.classList.add('nightmode')
+  }
 
   render() {
     return (
@@ -190,19 +195,19 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={Home}/>
           <Route path="/migraines/new" render={(routeProps) => {
-            return <AddMigraine loggedInUser={this.state.loggedInUser} onSubmit={this.handleCreateMigraine} onLogout={this.handleLogout} errorMessage={this.state.migraineFormError} {...routeProps}/>
+            return <AddMigraine loggedInUser={this.state.loggedInUser} onSubmit={this.handleCreateMigraine} onLogout={this.handleLogout} onNightmode={this.handleNightmode} errorMessage={this.state.migraineFormError} {...routeProps}/>
           }}  />
           <Route path="/migraines/stats" render={() => {
-            return <Stats loggedInUser={this.state.loggedInUser} migraines={this.state.migraines} onLogout={this.handleLogout}/>
+            return <Stats loggedInUser={this.state.loggedInUser} migraines={this.state.migraines} onNightmode={this.handleNightmode} onLogout={this.handleLogout}/>
           }}  />
           <Route path="/migraines/history" render={() => {
-            return <History loggedInUser={this.state.loggedInUser} migraines={this.state.migraines} onLogout={this.handleLogout} onDelete={this.handleDeleteMigraine}/>
+            return <History loggedInUser={this.state.loggedInUser} migraines={this.state.migraines} onNightmode={this.handleNightmode} onLogout={this.handleLogout} onDelete={this.handleDeleteMigraine}/>
           }}  />
           <Route path="/migraines/:id/edit" render={(routeProps) => {
-            return <EditMigraine loggedInUser={this.state.loggedInUser} onLogout={this.handleLogout} onEdit={this.handleEditMigraine} {...routeProps}/>
+            return <EditMigraine loggedInUser={this.state.loggedInUser} onLogout={this.handleLogout} onNightmode={this.handleNightmode} onEdit={this.handleEditMigraine} {...routeProps}/>
           }}  />
           <Route path="/explore" render={() => {
-            return <Media onLogout={this.handleLogout}/>
+            return <Media onLogout={this.handleLogout} onNightmode={this.handleNightmode}/>
           }}  />
           <Route path="/recommendations" render={() => {
             return <Recommendations onLogout={this.handleLogout}/>

@@ -142,7 +142,7 @@ export default class EditMigraine extends React.Component {
     }
     return (
       <div className="new-migraine-screen user-screen">
-        <Nav onLogout={this.props.onLogout} />
+        <Nav onLogout={this.props.onLogout} onNightmode={this.props.onNightmode}/>
           <div><h2>Edit your migraine</h2></div>
 
 

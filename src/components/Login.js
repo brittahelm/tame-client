@@ -6,7 +6,7 @@ export default function Login(props) {
             <h2>Log In</h2>
             <form className="auth-form" onSubmit={props.onLogin}>
                 <input name="email" type="email" placeholder="Email"/>
-                <input name="password" type="text" placeholder="Password"/>
+                <input name="password" type="password" placeholder="Password"/>
                 <button className="button" type="submit">Log In</button>
             </form>
             {props.errorMessage && <p className="auth-error">{props.errorMessage}</p>}

@@ -29,7 +29,7 @@ export default class Media extends Component {
     render() {
         return (
             <div className="user-screen">
-                <Nav onLogout={this.props.onLogout}/>
+                <Nav onLogout={this.props.onLogout} onNightmode={this.props.onNightmode}/>
                 <h2>Explore Media</h2>
                 <div className="media-box-outer">
                 <div className="media-box">

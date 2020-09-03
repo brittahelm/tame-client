@@ -139,7 +139,7 @@ export default class AddMigraine extends React.Component {
     }
     return (
       <div className="new-migraine-screen user-screen">
-        <Nav onLogout={this.props.onLogout} />
+        <Nav onLogout={this.props.onLogout} onNightmode={this.props.onNightmode} />
           <div><h2>Record a new migraine</h2><h4>Please provide as much information as possible, at least an estimated start time, pain level and symptoms. You can edit and add to the information later.</h4></div>
 
 

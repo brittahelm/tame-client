@@ -7,6 +7,7 @@ export default function MyNav(props) {
         <div>
         <p>tame</p>
         </div>
+        <div><i onClick={() => props.onNightmode()} className="fas fa-moon"></i></div>
         <div>
         <button
           className="button log-out-button"

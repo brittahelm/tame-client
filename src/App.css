@@ -175,6 +175,11 @@ input:-webkit-autofill:active {
   margin-top: 5px;
 }
 
+.fa-moon {
+  color: white;
+  font-size: 1.5rem;
+}
+
 .nav-footer {
   background-color: rgb(125, 218, 255);
   height: 75px;
@@ -360,6 +365,11 @@ input:-webkit-autofill:active {
   margin: 50px auto;
 }
 
+
+.nightmode {
+  background-color: #3c3842;
+  color: white;
+}
 
 
 

@@ -46,7 +46,7 @@ export default class History extends React.Component {
     }
     return (
         <div className="user-screen">
-            <Nav onLogout={this.props.onLogout}/>
+            <Nav onLogout={this.props.onLogout} onNightmode={this.props.onNightmode}/>
             <h2>History</h2>
             <div className="history-box-outer">
             {   
